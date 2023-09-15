@@ -1,0 +1,20 @@
+{
+  "name": "Coolenglish Fix",
+  "description": "버그좀 고쳐라",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "permissions": ["scripting", "storage", "unlimitedStorage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://coolenglish.co.kr/*",
+        "https://www.coolenglish.co.kr/*"
+      ],
+      "js": ["fixer.js"],
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "128": "/images/128.png"
+  }
+}
