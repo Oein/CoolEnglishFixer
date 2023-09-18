@@ -21,6 +21,7 @@
 
   function script() {
     const fixSAVEPHPBUG = () => {
+      let fetching = false;
       const eventHandler = function () {
         if (current_step_type == "SP") return;
 
@@ -33,6 +34,8 @@
           current_step_type == "LR"
         ) {
         } else {
+          if (fetching) return;
+          fetching = true;
           $.ajax({
             type: "GET",
             url: "https://coolenglish.co.kr/word/save.php",
@@ -52,49 +55,37 @@
             async: false,
             cache: false,
             complate: function (response) {},
-            success: function (data) {},
+            success: function (data) {
+              fetching = false;
+
+              if (
+                current_step_type == "SA" ||
+                current_step_type == "SB" ||
+                current_step_type == "SC" ||
+                current_step_type == "SD" ||
+                current_step_type == "RR" ||
+                current_step_type == "LR"
+              ) {
+              } else {
+                if (current_index_count + 1 == total_word_count) {
+                  $("#nextclick").show();
+                }
+              }
+
+              if (player_state == 1) {
+                player_state = 0;
+                return true;
+              }
+
+              if (playtimer) clearTimeout(playtimer);
+              playtimer = setTimeout(timeplay, 10);
+            },
           });
         }
 
-        if (
-          current_step_type == "SA" ||
-          current_step_type == "SB" ||
-          current_step_type == "SC" ||
-          current_step_type == "SD" ||
-          current_step_type == "RR" ||
-          current_step_type == "LR"
-        ) {
-        } else {
-          if (current_index_count + 1 == total_word_count) {
-            //	alert('end');
-            $("#nextclick").show();
-            //				$("#playstop")
-            //$("#stopbtn,#stopbtn1").trigger("click");//종료
-          }
-        }
-        //	alert(player_state);
-        if (player_state == 1) {
-          player_state = 0;
-          return true;
-        }
-        if (playtimer) clearTimeout(playtimer);
-
-        //해당 스텝에서는 대기시간 없이 빠르게..
-        if (
-          current_step_type == "SA" ||
-          current_step_type == "SB" ||
-          current_step_type == "SC" ||
-          current_step_type == "SD" ||
-          current_step_type == "RR" ||
-          current_step_type == "LR"
-        ) {
-          playtimer = setTimeout(timeplay, 10);
-        } else {
-          playtimer = setTimeout(timeplay, 10);
-        }
+        return true;
       };
 
-      let eventListenerAdded = false;
       window.speech2 = (idx) => {
         window.select_position_mark(current_index_count);
         window
@@ -103,10 +94,7 @@
             parseInt(current_index_count) + parseInt(1) + "/" + total_word_count
           );
 
-        if (!eventListenerAdded) {
-          audioElementlc.addEventListener("ended", eventHandler);
-          eventListenerAdded = true;
-        }
+        audioElementlc.addEventListener("ended", eventHandler);
       };
     };
 
