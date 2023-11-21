@@ -1,7 +1,7 @@
 {
   "name": "Coolenglish Fix",
   "description": "버그좀 고쳐라",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "manifest_version": 2,
   "permissions": ["scripting", "storage", "unlimitedStorage"],
   "content_scripts": [
@@ -12,6 +12,20 @@
       ],
       "js": ["fixer.js"],
       "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.coolenglish.co.kr/study/*",
+        "https://coolenglish.co.kr/study/*"
+      ],
+      "js": ["multiple_windows.js"]
+    },
+    {
+      "matches": [
+        "https://www.coolenglish.co.kr/main/",
+        "https://coolenglish.co.kr/main/"
+      ],
+      "js": ["open_study_page_in_an_old_window.js"]
     }
   ],
   "icons": {
