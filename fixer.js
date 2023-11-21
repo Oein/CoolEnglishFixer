@@ -199,19 +199,14 @@
   }
 
   const injectToastr = () => {
-    let s = document.createElement("script");
-    s.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js";
-    document.head.appendChild(s);
-
     let c = document.createElement("link");
     c.rel = "stylesheet";
     c.href =
       "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css";
     document.head.appendChild(c);
 
-    s.onload = () => {
-      inject(script);
+    c.onload = () => {
+      script();
     };
   };
   injectToastr();
