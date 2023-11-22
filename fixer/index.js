@@ -1,0 +1,1 @@
+import{script as t}from"./main.js";!function(){let e;(e=document.createElement("link")).rel="stylesheet",e.href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css",document.head.appendChild(e),e.onload=()=>{t()}}();
